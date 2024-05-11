@@ -93,7 +93,7 @@ func (udm *UDM) Initialize(c *cli.Context) error {
 			return err
 		}
 	} else {
-		DefaultUdmConfigPath := path_util.Free5gcPath("free5gc/config/udmcfg.yaml")
+		DefaultUdmConfigPath := path_util.Free5gcPath("../config/udmcfg.yaml")
 		if err := factory.InitConfigFactory(DefaultUdmConfigPath); err != nil {
 			return err
 		}
