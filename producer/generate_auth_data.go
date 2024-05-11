@@ -19,6 +19,7 @@ import (
 
 	"github.com/antihax/optional"
 
+	"github.com/lakshya-chopra/util_3gpp/suci"
 	"github.com/omec-project/UeauCommon"
 	"github.com/omec-project/http_wrapper"
 	"github.com/omec-project/milenage"
@@ -28,7 +29,8 @@ import (
 	udm_context "github.com/omec-project/udm/context"
 	"github.com/omec-project/udm/logger"
 	"github.com/omec-project/udm/util"
-	"github.com/Nikhil690/util_3gpp/suci"
+
+	"github.com/cloudflare/circl/kem/schemes"
 )
 
 const (
@@ -164,7 +166,14 @@ func GenerateAuthDataProcedure(authInfoRequest models.AuthenticationInfoRequest,
 
 	response = &models.AuthenticationInfoResult{}
 	rand.Seed(time.Now().UnixNano())
-	supi, err := suci.ToSupi(supiOrSuci, udm_context.UDM_Self().GetUdmProfileAHNPrivateKey())
+
+	// supi, err := suci.ToSupi(supiOrSuci, udm_context.UDM_Self().GetUdmProfileAHNPrivateKey())
+
+	//create a new oqs client, set the secret key & pass it onto the toSupi_2(...) function.
+	kem_scheme := schemes.ByName("Kyber512")
+
+	supi, err := suci.ToSupi_2(supiOrSuci, udm_context.UDM_Self().GetUdmProfileEHNPrivateKey(), udm_context.UDM_Self().GetUdmProfileEHNPublicKey(), kem_scheme)
+
 	if err != nil {
 		problemDetails = &models.ProblemDetails{
 			Status: http.StatusForbidden,
