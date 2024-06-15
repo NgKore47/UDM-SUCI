@@ -6,12 +6,12 @@ go 1.21
 
 require (
 	github.com/Nikhil690/connsert v1.3.4
-	// github.com/omec-project/util_3gpp v1.1.1
-	github.com/Nikhil690/util_3gpp v1.1.2
 	github.com/antihax/optional v1.0.0
 	github.com/antonfisher/nested-logrus-formatter v1.3.1
+	github.com/cloudflare/circl v1.2.0
 	github.com/gin-gonic/gin v1.9.1
 	github.com/google/uuid v1.6.0
+	github.com/lakshya-chopra/util_3gpp v1.6.2
 	github.com/omec-project/UeauCommon v1.1.0
 	github.com/omec-project/http2_util v1.1.0
 	github.com/omec-project/http_wrapper v1.1.0
@@ -24,6 +24,8 @@ require (
 	github.com/urfave/cli v1.22.5
 	gopkg.in/yaml.v2 v2.4.0
 )
+
+require github.com/Nikhil690/util_3gpp v1.1.2 // indirect
 
 require (
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2 // indirect
@@ -40,7 +42,7 @@ require (
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/h2non/parth v0.0.0-20190131123155-b4df798d6542 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
-	github.com/klauspost/cpuid/v2 v2.2.4 // indirect
+	github.com/klauspost/cpuid/v2 v2.2.4 // indirect; indirect// indirect
 	github.com/leodido/go-urn v1.2.4 // indirect
 	github.com/mattn/go-isatty v0.0.19 // indirect
 	github.com/mitchellh/mapstructure v1.4.1 // indirect

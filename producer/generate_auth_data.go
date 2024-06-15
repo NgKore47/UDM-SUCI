@@ -19,6 +19,7 @@ import (
 
 	"github.com/antihax/optional"
 
+	"github.com/lakshya-chopra/util_3gpp/suci"
 	"github.com/omec-project/UeauCommon"
 	"github.com/omec-project/http_wrapper"
 	"github.com/omec-project/milenage"
@@ -28,13 +29,14 @@ import (
 	udm_context "github.com/omec-project/udm/context"
 	"github.com/omec-project/udm/logger"
 	"github.com/omec-project/udm/util"
-	"github.com/Nikhil690/util_3gpp/suci"
+
+	"github.com/cloudflare/circl/kem/schemes"
 )
 
 const (
 	SqnMAx    int64 = 0x7FFFFFFFFFF
 	ind       int64 = 32
-	keyStrLen int   = 32
+	keyStrLen int   = 65
 	opStrLen  int   = 32
 	opcStrLen int   = 32
 )
@@ -164,7 +166,14 @@ func GenerateAuthDataProcedure(authInfoRequest models.AuthenticationInfoRequest,
 
 	response = &models.AuthenticationInfoResult{}
 	rand.Seed(time.Now().UnixNano())
-	supi, err := suci.ToSupi(supiOrSuci, udm_context.UDM_Self().GetUdmProfileAHNPrivateKey())
+
+	// supi, err := suci.ToSupi(supiOrSuci, udm_context.UDM_Self().GetUdmProfileAHNPrivateKey())
+
+	//create a new kem client, set the secret key & pass it onto the toSupi_2(...) function.
+	kem_scheme := schemes.ByName("Kyber512")
+
+	supi, err := suci.ToSupi_2(supiOrSuci, udm_context.UDM_Self().GetUdmProfileEHNPrivateKey(), udm_context.UDM_Self().GetUdmProfileEHNPublicKey(), kem_scheme, udm_context.UDM_Self().GetUdmProfileFHNECCPrivateKey(), udm_context.UDM_Self().GetUdmProfileFHNECCPublicKey())
+
 	if err != nil {
 		problemDetails = &models.ProblemDetails{
 			Status: http.StatusForbidden,
